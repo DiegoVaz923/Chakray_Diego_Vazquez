@@ -22,7 +22,7 @@ public class DataInitializer implements CommandLineRunner {
 
         userRepository.save(
                 User.builder()
-                        .id(UUID.randomUUID())
+                        .id(UUID.fromString("11111111-1111-1111-1111-111111111111"))
                         .email("diego@example.com")
                         .name("Diego Vazquez")
                         .phone("7771082089")
@@ -42,7 +42,7 @@ public class DataInitializer implements CommandLineRunner {
 
         userRepository.save(
                 User.builder()
-                        .id(UUID.randomUUID())
+                        .id(UUID.fromString("22222222-2222-2222-2222-222222222222"))
                         .email("john@example.com")
                         .name("John Doe")
                         .phone("5551234567")
@@ -62,7 +62,7 @@ public class DataInitializer implements CommandLineRunner {
 
         userRepository.save(
                 User.builder()
-                        .id(UUID.randomUUID())
+                        .id(UUID.fromString("33333333-3333-3333-3333-333333333333"))
                         .email("jane@example.com")
                         .name("Jane Doe")
                         .phone("1234567890")

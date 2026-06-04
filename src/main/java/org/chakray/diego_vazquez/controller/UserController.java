@@ -17,8 +17,9 @@ public class UserController {
     private final UserService userService;
 
     @GetMapping
-    public List<User> getAllUsers() {
-        return userService.getAllUsers();
+    public List<User> getUsers(@RequestParam(required = false) String countryCode,
+                               @RequestParam(required = false) String sortType) {
+        return userService.getUsers(countryCode, sortType);
     }
 
     @GetMapping("/{id}")

@@ -1,0 +1,31 @@
+package org.chakray.diego_vazquez.repository;
+
+import org.chakray.diego_vazquez.entity.User;
+import org.springframework.stereotype.Repository;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
+
+@Repository
+public class UserRepository {
+    private final List<User> users = new ArrayList<>();
+
+    public List<User> findAll() {
+        return users;
+    }
+
+    public Optional<User> findById(UUID id) {
+        return users.stream()
+                .filter(user -> user.getId().equals(id)).findFirst();}
+
+    public User save(User user) {
+        users.add(user);
+        return user;
+    }
+
+    public void delete(UUID id) {
+        users.removeIf(user -> user.getId().equals(id));
+    }
+}

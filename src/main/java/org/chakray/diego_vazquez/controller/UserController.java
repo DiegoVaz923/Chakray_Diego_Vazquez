@@ -3,7 +3,9 @@ package org.chakray.diego_vazquez.controller;
 import lombok.RequiredArgsConstructor;
 import org.chakray.diego_vazquez.dto.request.CreateUserRequest;
 import org.chakray.diego_vazquez.dto.request.UpdateUserRequest;
+import org.chakray.diego_vazquez.dto.response.UserResponse;
 import org.chakray.diego_vazquez.entity.User;
+import org.chakray.diego_vazquez.mapper.UserMapper;
 import org.chakray.diego_vazquez.service.UserService;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,26 +17,28 @@ import java.util.UUID;
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
+    private final UserMapper userMapper;
 
     @GetMapping
-    public List<User> getUsers(@RequestParam(required = false) String countryCode,
-                               @RequestParam(required = false) String sortType) {
-        return userService.getUsers(countryCode, sortType);
+    public List<UserResponse> getUsers(@RequestParam(required = false) String countryCode,
+                                       @RequestParam(required = false) String sortType) {
+        return userService.getUsers(countryCode, sortType).stream()
+                .map(userMapper::toResponse).toList();
     }
 
     @GetMapping("/{id}")
-    public User getUserById(@PathVariable UUID id) {
-        return userService.getUserById(id);
+    public UserResponse getUserById(@PathVariable UUID id) {
+        return userMapper.toResponse(userService.getUserById(id));
     }
 
     @PostMapping
-    public User createUser(@RequestBody CreateUserRequest request) {
-        return userService.createUser(request);
+    public UserResponse createUser(@RequestBody CreateUserRequest request) {
+        return userMapper.toResponse(userService.createUser(request));
     }
 
     @PatchMapping("/{id}")
-    public User updateUser(@PathVariable UUID id, @RequestBody UpdateUserRequest request) {
-        return userService.updateUser(id, request);
+    public UserResponse updateUser(@PathVariable UUID id, @RequestBody UpdateUserRequest request) {
+        return userMapper.toResponse(userService.updateUser(id, request));
     }
 
     @DeleteMapping("/{id}")

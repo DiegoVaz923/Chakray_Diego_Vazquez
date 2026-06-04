@@ -20,6 +20,6 @@ public class UserResponse {
     private String name;
     private String phone;
     private String taxId;
-    private LocalDateTime createdAt;
+    private String createdAt;
     private List<Address> addresses;
 }

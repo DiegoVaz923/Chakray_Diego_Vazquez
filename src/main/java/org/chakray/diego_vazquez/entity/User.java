@@ -1,8 +1,7 @@
 package org.chakray.diego_vazquez.entity;
 
 import lombok.*;
-import org.hibernate.validator.constraints.UUID;
-
+import java.util.UUID;
 import java.time.LocalDateTime;
 import java.util.List;
 

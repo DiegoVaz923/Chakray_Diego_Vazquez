@@ -1,12 +1,11 @@
 package org.chakray.diego_vazquez.repository;
 
 import org.chakray.diego_vazquez.entity.User;
-import org.springframework.stereotype.Repository;
+import java.util.UUID;import org.springframework.stereotype.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 @Repository
 public class UserRepository {

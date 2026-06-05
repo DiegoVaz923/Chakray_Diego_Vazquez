@@ -1,5 +1,6 @@
 package org.chakray.diego_vazquez.controller;
 
+import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import org.chakray.diego_vazquez.dto.request.CreateUserRequest;
 import org.chakray.diego_vazquez.dto.request.UpdateUserRequest;
@@ -32,12 +33,12 @@ public class UserController {
     }
 
     @PostMapping
-    public UserResponse createUser(@RequestBody CreateUserRequest request) {
+    public UserResponse createUser(@Valid @RequestBody CreateUserRequest request) {
         return userMapper.toResponse(userService.createUser(request));
     }
 
     @PatchMapping("/{id}")
-    public UserResponse updateUser(@PathVariable UUID id, @RequestBody UpdateUserRequest request) {
+    public UserResponse updateUser(@PathVariable UUID id, @Valid @RequestBody UpdateUserRequest request) {
         return userMapper.toResponse(userService.updateUser(id, request));
     }
 

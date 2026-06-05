@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Getter
 @Setter
@@ -19,7 +20,9 @@ public class UserResponse {
     private String email;
     private String name;
     private String phone;
+    @JsonProperty("tax_id")
     private String taxId;
+    @JsonProperty("created_at")
     private String createdAt;
     private List<Address> addresses;
 }

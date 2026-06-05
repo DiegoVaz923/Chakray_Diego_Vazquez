@@ -1,5 +1,6 @@
 package org.chakray.diego_vazquez.entity;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
 @Getter
@@ -11,5 +12,6 @@ public class Address {
     private Long id;
     private String name;
     private String street;
+    @JsonProperty("country_code")
     private String countryCode;
 }

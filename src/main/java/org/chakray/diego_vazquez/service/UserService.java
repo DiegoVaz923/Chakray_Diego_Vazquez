@@ -20,25 +20,59 @@ import java.util.stream.Stream;
 public class UserService {
     private final UserRepository userRepository;
 
-    public List<User> getUsers(String countryCode, String sortType) {
-        Stream<User> stream = userRepository.findAll().stream();
+    public List<User> getUsers(String sortedBy, String filter) {
 
-        if (countryCode != null && !countryCode.isBlank()) {
-            stream = stream.filter(user ->
-                    user.getAddresses().stream().anyMatch(address ->
-                            address.getCountryCode().equalsIgnoreCase(countryCode)));
+        List<User> users = userRepository.findAll();
+
+        if (filter != null && !filter.isBlank()) {
+
+            String[] parts = filter.split("\\+");
+            if (parts.length == 3) {
+
+                String field = parts[0];
+                String operation = parts[1];
+                String value = parts[2];
+
+                users = users.stream()
+                    .filter(user -> {
+
+                        String fieldValue = getFieldValue(user, field);
+
+                        return switch (operation) {
+
+                            case "co" -> fieldValue.contains(value);
+                            case "eq" -> fieldValue.equals(value);
+                            case "sw" -> fieldValue.startsWith(value);
+                            case "ew" -> fieldValue.endsWith(value);
+
+                            default -> false;
+                        };
+                    })
+                    .toList();
+            }
         }
 
-        List<User> users = stream.toList();
-
-        if (sortType != null) {
-            if (sortType.equals("+name")){
-                users = users.stream().sorted(Comparator.comparing(User::getName)).toList();
+        if (sortedBy != null && !sortedBy.isBlank()) {
+            switch (sortedBy) {
+                case "id" -> users = users.stream()
+                                .sorted(Comparator.comparing(User::getId))
+                                .toList();
+                case "email" -> users = users.stream()
+                                .sorted(Comparator.comparing(User::getEmail))
+                                .toList();
+                case "name" -> users = users.stream()
+                                .sorted(Comparator.comparing(User::getName))
+                                .toList();
+                case "phone" -> users = users.stream()
+                                .sorted(Comparator.comparing(User::getPhone))
+                                .toList();
+                case "tax_id" -> users = users.stream()
+                                .sorted(Comparator.comparing(User::getTaxId))
+                                .toList();
+                case "created_at" -> users = users.stream()
+                                .sorted(Comparator.comparing(User::getCreatedAt))
+                                .toList();
             }
-            if (sortType.equals("-name")){
-                users = users.stream().sorted(Comparator.comparing(User::getName).reversed()).toList();
-            }
-            return users;
         }
         return users;
     }
@@ -85,5 +119,18 @@ public class UserService {
         getUserById(id);
 
         userRepository.delete(id);
+    }
+
+    private String getFieldValue(User user, String field) {
+
+        return switch (field) {
+            case "email" -> user.getEmail();
+            case "name" -> user.getName();
+            case "phone" -> user.getPhone();
+            case "tax_id" -> user.getTaxId();
+            case "id" -> user.getId().toString();
+            case "created_at" -> user.getCreatedAt().toString();
+            default -> "";
+        };
     }
 }

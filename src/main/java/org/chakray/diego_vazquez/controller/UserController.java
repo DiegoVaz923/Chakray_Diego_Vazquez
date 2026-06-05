@@ -21,9 +21,11 @@ public class UserController {
     private final UserMapper userMapper;
 
     @GetMapping
-    public List<UserResponse> getUsers(@RequestParam(required = false) String countryCode,
-                                       @RequestParam(required = false) String sortType) {
-        return userService.getUsers(countryCode, sortType).stream()
+    public List<UserResponse> getUsers(
+            @RequestParam(required = false) String sortedBy,
+            @RequestParam(required = false) String filter) {
+
+        return userService.getUsers(sortedBy, filter).stream()
                 .map(userMapper::toResponse).toList();
     }
 

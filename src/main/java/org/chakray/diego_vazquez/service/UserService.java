@@ -86,6 +86,12 @@ public class UserService {
 
     public User createUser(CreateUserRequest request) {
 
+        boolean taxIdExists = userRepository.findAll().stream().anyMatch(u -> u.getTaxId().equals(request.getTaxId()));
+
+        if(taxIdExists) {
+            throw new IllegalArgumentException("tax id already exists" + request.getTaxId());
+        }
+
         User user = User.builder()
                 .id(UUID.randomUUID())
                 .email(request.getEmail())

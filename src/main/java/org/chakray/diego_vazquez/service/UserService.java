@@ -19,6 +19,7 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class UserService {
     private final UserRepository userRepository;
+    private final AesEncryptionService aesEncryptionService;
 
     public List<User> getUsers(String sortedBy, String filter) {
 
@@ -86,12 +87,18 @@ public class UserService {
 
     public User createUser(CreateUserRequest request) {
 
+        boolean taxIdExists = userRepository.findAll().stream().anyMatch(u -> u.getTaxId().equals(request.getTaxId()));
+
+        if(taxIdExists) {
+            throw new IllegalArgumentException("tax id already exists" + request.getTaxId());
+        }
+
         User user = User.builder()
                 .id(UUID.randomUUID())
                 .email(request.getEmail())
                 .name(request.getName())
                 .phone(request.getPhone())
-                .password(request.getPassword())
+                .password(aesEncryptionService.encrypt(request.getPassword()))
                 .taxId(request.getTaxId())
                 .addresses(request.getAddresses())
                 .createdAt(LocalDateTime.now())
@@ -107,7 +114,7 @@ public class UserService {
         user.setEmail(request.getEmail());
         user.setName(request.getName());
         user.setPhone(request.getPhone());
-        user.setPassword(request.getPassword());
+        user.setPassword(aesEncryptionService.encrypt(request.getPassword()));
         user.setTaxId(request.getTaxId());
         user.setAddresses(request.getAddresses());
 

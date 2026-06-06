@@ -1,0 +1,10 @@
+services:
+  api:
+    build: .
+    container_name: chakray-diego-vazquez
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_PROFILES_ACTIVE=default
+      - AES_SECRET=Chakray_AES256!
+    restart: unless-stopped

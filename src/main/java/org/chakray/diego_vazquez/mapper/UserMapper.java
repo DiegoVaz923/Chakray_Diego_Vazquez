@@ -13,7 +13,7 @@ public class UserMapper {
 
         ZoneId madagascarZone = ZoneId.of("Indian/Antananarivo");
 
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:ss");
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm");
 
         String formattedDate = user.getCreatedAt().atZone(ZoneId.systemDefault())
                                 .withZoneSameInstant(madagascarZone)

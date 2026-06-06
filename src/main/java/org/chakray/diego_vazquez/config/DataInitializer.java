@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.chakray.diego_vazquez.entity.Address;
 import org.chakray.diego_vazquez.entity.User;
 import org.chakray.diego_vazquez.repository.UserRepository;
+import org.chakray.diego_vazquez.service.AesEncryptionService;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -16,6 +17,7 @@ import java.util.UUID;
 public class DataInitializer implements CommandLineRunner {
 
     private final UserRepository userRepository;
+    private final AesEncryptionService aesEncryptionService;
 
     @Override
     public void run(String... args) {
@@ -26,7 +28,7 @@ public class DataInitializer implements CommandLineRunner {
                         .email("diego@hotmail.com")
                         .name("Diego Vazquez")
                         .phone("7771082089")
-                        .password("password123")
+                        .password(aesEncryptionService.encrypt("password123"))
                         .taxId("VASD950101ABC")
                         .createdAt(LocalDateTime.now())
                         .addresses(List.of(
@@ -46,7 +48,7 @@ public class DataInitializer implements CommandLineRunner {
                         .email("leslie@gmail.com")
                         .name("Leslie Vega")
                         .phone("5551234567")
-                        .password("password123")
+                        .password(aesEncryptionService.encrypt("wordpass123"))
                         .taxId("VESL920202DEF")
                         .createdAt(LocalDateTime.now())
                         .addresses(List.of(
@@ -66,7 +68,7 @@ public class DataInitializer implements CommandLineRunner {
                         .email("john@example.com")
                         .name("John Doe")
                         .phone("5551234567")
-                        .password("password123")
+                        .password(aesEncryptionService.encrypt("password321"))
                         .taxId("DOAJ920202DEF")
                         .createdAt(LocalDateTime.now())
                         .addresses(List.of(

@@ -74,6 +74,9 @@ GET /users?filter=email+ew+gmail.com
 GET /users?filter=phone+sw+555
 GET /users?filter=tax_id+eq+VASD950101ABC
 
+# Pendiente
+- Validación "AndresFormat" para número telefonico: En espera de respuesta de la evaluadora
+
 # Autor
 
 Diego Vázquez

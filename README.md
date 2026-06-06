@@ -74,6 +74,9 @@ GET /users?filter=email+ew+gmail.com
 GET /users?filter=phone+sw+555
 GET /users?filter=tax_id+eq+VASD950101ABC
 
+# Pending
+- AndresFormat phone validation: awaiting clarification from evaluators
+
 # Author
 
 Diego Vázquez
